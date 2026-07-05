@@ -19,8 +19,10 @@ gage = 0
 
 x_wall = 500
 y_wall = 0
-w_wall = 10
-h_wall = 500
+w_wall = 50
+h_wall = 200
+
+is_switch_on = False
 
 while True:
     wall = (x < 0 or y < 0) and (x > 250 or y > 250)
@@ -75,14 +77,22 @@ while True:
         x -= 3#.05
 
     # 세로 벽 못넘어가도록 x 좌표 제한
-    if x >= x_wall - 50:
-        x = 500 - 50
-        # x = x_wall - 50
-    if x >= 250 - 50:
-        x = 250 - 50
+    # if x >= x_wall - 50 and y < 200 and x < 510:
+    #     x = 500 - 50
+    #     # x = x_wall - 50
+    # if x <= 550 and y < 200:
+    #     x = 550
+    if x_wall <= x + 50 and x <= x_wall + 50:
+        is_switch_on = True
 
-    if y >= 250 - 50:
-        y = 250 - 50
+
+
+
+    # if x >= 250 - 50:
+    #     x = 250 - 50
+
+    # if y >= 250 - 50:
+    #     y = 250 - 50
 
     if (x >= 65 and y >= 15) and (x <= 110 and y <= 60):
         gage += 3
@@ -105,9 +115,12 @@ while True:
         a+=10
 
     # 세로 벽
-    pygame.draw.rect(screen, (255, 0, 0), (x_wall, y_wall, w_wall, h_wall))
-    pygame.draw.rect(screen, (255, 0, 0), (x_wall / 2, y_wall, w_wall, h_wall))
-    pygame.draw.rect(screen, (255, 0, 0), (0, 250, h_wall*3, w_wall))
+    if is_switch_on == True:
+        pygame.draw.rect(screen, (0, 255, 0), (x_wall, y_wall, w_wall, h_wall))
+    else:
+        pygame.draw.rect(screen, (255, 0, 0), (x_wall, y_wall, w_wall, h_wall))
+    # pygame.draw.rect(screen, (255, 0, 0), (x_wall / 2, y_wall, w_wall, h_wall))
+    # pygame.draw.rect(screen, (255, 0, 0), (0, 250, h_wall*3, w_wall))
 
     pygame.display.flip()
 
