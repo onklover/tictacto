@@ -12,7 +12,10 @@ up = False
 down = False
 space = False
 
+bullet_list = []
+
 while True:
+    # 이벤트 감지
     for event in pygame.event.get():
         print(event)
         if event.type == 768:
@@ -43,6 +46,7 @@ while True:
             if event.key == 32:
                 space = False
 
+    # 업데이트
     if is_right_key_down == True:
         x += 3#.05
     if up == True:
@@ -52,13 +56,25 @@ while True:
     if left == True:
         x -= 3#.05
 
-    screen.fill((0, 0, 0))
     if space == True:
-        shootx = x
-        shooty = y
-        while (space == True):
-            shooty-=10
-            pygame.draw.rect(screen, (0, 255, 0), (shootx+20,shooty-10,10,30))
+        bullet_list.append([x, y])
+
+    for i in range(len(bullet_list)):
+        bullet_list[i][1] -= 10
+
+    # 그리기 
+    screen.fill((0, 0, 0))
+    # if space == True:
+        # shootx = x
+        # shooty = y
+        # if space:
+        #     shooty-=10
+        #     pygame.draw.rect(screen, (0, 255, 0), (shootx+20,shooty-10,10,30))
+    for i in range(len(bullet_list)):
+        shootx, shooty = bullet_list[i]
+        shooty -= 10
+        pygame.draw.rect(screen, (0, 255, 0), (shootx+20,shooty-10,10,30))
+
     pygame.draw.rect(screen, (255, 0, 0), (x, y, 50, 50))
     pygame.display.flip()
 
