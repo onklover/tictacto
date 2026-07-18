@@ -17,7 +17,8 @@ bullet_list = []
 while True:
     # 이벤트 감지
     for event in pygame.event.get():
-        print(event)
+        # print(event)
+        print(bullet_list)
         if event.type == 768:
             if event.key == 1073741906:
                 down = True
@@ -71,11 +72,20 @@ while True:
         #     shooty-=10
         #     pygame.draw.rect(screen, (0, 255, 0), (shootx+20,shooty-10,10,30))
     for i in range(len(bullet_list)):
-        shootx, shooty = bullet_list[i]
+        try:
+            shootx, shooty = bullet_list[i]
+        except:
+            pass
         shooty -= 10
         pygame.draw.rect(screen, (0, 255, 0), (shootx+20,shooty-10,10,30))
+        try:
+            if shooty < 0:
+                del bullet_list[i]
+        except:
+            pass
 
     pygame.draw.rect(screen, (255, 0, 0), (x, y, 50, 50))
+    pygame.draw.rect(screen, (255,255,0), (100,100,100,100))
     pygame.display.flip()
 
     clock.tick(FPS)
